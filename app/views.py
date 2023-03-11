@@ -5,8 +5,10 @@ Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file contains the routes for your application.
 """
 
-from app import app
-from flask import render_template, request, redirect, url_for
+from app import app, db
+from flask import render_template, request, redirect, url_for, flash
+from app.database import Properties
+from app.forms import PropertyForms, UploadForm
 
 
 ###
@@ -23,6 +25,38 @@ def home():
 def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
+
+@app.route('/properties/create', methods=['GET', 'POST'])
+def newproperties():
+    form = PropertyForms()
+
+    if form.validate_on_submit():
+        # Check user's password
+
+        # Save property information to database
+        title = form.title.data
+        description = form.description.data
+        roomnum = form.roomnum.data
+        bathnum = form.bathnum.data
+        propertytype = form.property.data
+        location = form.location.data
+        price = form.price.data
+
+        propinfo = Properties(title=title, description=description,roomnum=roomnum,bathnum=bathnum, propertytype=propertytype,location=location,price=price)
+
+        db.session.add(propinfo)
+        db.session.commit()
+
+
+        flash('Property information saved successfully')
+        return redirect(url_for('properties'))
+
+    return render_template('property.html', form=form)
+
+@app.route('/properties')
+def property():
+    """Render website's home page."""
+    return render_template('home.html')
 
 
 ###
