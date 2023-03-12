@@ -12,8 +12,9 @@ class Properties(db.Model):
     price = db.Column(db.String(15))
     propertytype = db.Column(db.String(255))
     location = db.Column(db.String(255))
+    photo = db.Column(db.String(255))
 
-    def __init__(self, title, description, roomnum, bathnum, price, propertytype, location):
+    def __init__(self, title, description, roomnum, bathnum, price, propertytype, location, photo):
         self.title = title
         self.description = description
         self.roomnum = roomnum
@@ -21,6 +22,7 @@ class Properties(db.Model):
         self.price = price
         self.propertytype = propertytype
         self.location = location
+        self.photo = photo
 
     def is_authenticated(self):
         return True

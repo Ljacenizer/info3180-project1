@@ -4,11 +4,12 @@ Jinja2 Documentation:    https://jinja.palletsprojects.com/
 Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file contains the routes for your application.
 """
-
+import os
 from app import app, db
-from flask import render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash
+from werkzeug.utils import secure_filename
 from app.database import Properties
-from app.forms import PropertyForms, UploadForm
+from app.forms import PropertyForms
 
 
 ###
@@ -30,26 +31,27 @@ def about():
 def newproperties():
     form = PropertyForms()
 
-    if form.validate_on_submit():
-        # Check user's password
+    if request.method == "POST":
+        if form.validate_on_submit():
+            # Save property information to database
+            title = form.title.data
+            description = form.description.data
+            roomnum = form.roomnum.data
+            bathnum = form.bathnum.data
+            propertytype = form.property.data
+            location = form.location.data
+            price = form.price.data
+            image = form.photo.data
+            imgname = secure_filename(image.filename)
+            image.save(os.path.join(app.config['PROPERTIES'],imgname))
 
-        # Save property information to database
-        title = form.title.data
-        description = form.description.data
-        roomnum = form.roomnum.data
-        bathnum = form.bathnum.data
-        propertytype = form.property.data
-        location = form.location.data
-        price = form.price.data
+            propinfo = Properties(title, description, roomnum, bathnum, price, propertytype, location, imgname)
 
-        propinfo = Properties(title=title, description=description,roomnum=roomnum,bathnum=bathnum, propertytype=propertytype,location=location,price=price)
+            db.session.add(propinfo)
+            db.session.commit()
 
-        db.session.add(propinfo)
-        db.session.commit()
-
-
-        flash('Property information saved successfully')
-        return redirect(url_for('properties'))
+            flash('Property information saved successfully')
+            return redirect(url_for("property"))
 
     return render_template('property.html', form=form)
 

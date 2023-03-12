@@ -1,17 +1,55 @@
 {% extends 'base.html' %}
 
 {% block main %}
-<form class="form-login m-auto" method="post">
+<h1 class="page-header">Add New Property</h1>
+
+{% include 'flash_messages.html' %}
+
+<form action="{{ url_for('newproperties') }}" method="post" enctype="multipart/form-data">
+
+  {# Add the file upload field as you learnt for Flask-WTF #}
+  
   {{ form.csrf_token }}
-  <h2>Add New Property</h2>
-  <div class="form-floating">
-    {{ form.title(class='form-control') }}
-    {{ form.title.label() }}
+  <div class="form-group mb-3">
+    <h5>{{ form.title.label(class="form-label") }}</h5>
+    {{ form.title(class="form-control") }}
   </div>
-  <div class="form-floating">
-    {{ form.description(class='form-control') }}
-    {{ form.description.label() }}
+
+  <div class="form-group mb-3">
+    <h5>{{ form.description.label(class="form-label") }}</h5>
+    {{ form.description(class="form-control") }}
   </div>
-  <button class="btn btn-lg btn-primary w-100 mt-3" type="submit">Sign in</button>
+
+  <div class="form-group mb-3">
+    <h5>{{ form.roomnum.label(class="form-label") }}</h5>
+    {{ form.roomnum(class="form-control") }}
+  </div>
+  
+  <div class="form-group mb-3">
+    <h5>{{ form.bathnum.label(class="form-label") }}</h5>
+    {{ form.bathnum(class="form-control") }}
+  </div>
+
+  <div class="form-group mb-3">
+    <h5>{{ form.price.label(class="form-label") }}</h5>
+    {{ form.price(class="form-control") }}
+  </div>
+  
+  <div class="form-group mb-3">
+    <h5>{{ form.property.label(class="form-label") }}</h5>
+    {{ form.property(class="form-control") }}
+  </div>
+  
+  <div class="form-group mb-3">
+    <h5>{{ form.location.label(class="form-label") }}</h5>
+    {{ form.location(class="form-control") }}
+  </div>
+  
+  <div class="form-group mb-3">
+    <h5>{{ form.photo.label(class="form-label") }}</h5>
+    {{ form.photo(class="form-control") }}
+  </div>
+
+  <button type="submit" name="submit" class="btn btn-primary">Submit</button>
 </form>
 {% endblock %}
