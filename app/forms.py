@@ -9,7 +9,7 @@ class PropertyForms(FlaskForm):
     description = TextAreaField('Description', validators=[InputRequired()])
     roomnum = StringField('No. of Rooms', validators=[InputRequired()])
     bathnum = StringField('No. of Bathrooms', validators=[InputRequired()])
-    property = SelectField('Property Type', choices=[('house', 'House'), ('apartment', 'Apartment')])
+    property = SelectField('Property Type', choices=[('House', 'House'), ('Apartment', 'Apartment')])
     location = StringField('Location', validators=[InputRequired()])
     price = StringField('Price', validators=[InputRequired()])
     

@@ -9,6 +9,7 @@
             <h2>{{ data.title }}</h2>
             <p class="locations"><i class="fas fa-map-marker"></i> {{ data.location }}</p>
             <p class="priceline">${{ data.price }}</p>
+            <br>
             <a href="{{ url_for('propsingle', propertyid=data.id) }}">View property</a>
         </div>
     {% endfor %}

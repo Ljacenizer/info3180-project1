@@ -66,13 +66,13 @@ def property():
 
     return render_template('properties.html', properties=properties)
 
-@app.route('/properties/<propertyid>')
+@app.route('/properties/<int:propertyid>')
 def propsingle(propertyid):
     """Render a single property's details."""
     property = Properties.query.get(propertyid)
     if property is None:
-        flash('ID Invalid, try again')
-    return render_template('proptemplate.html', property=property)
+        flash('Invalid property')
+    return render_template('proptemplate.html',property=property)
 
 
 ###
