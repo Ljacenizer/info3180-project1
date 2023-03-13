@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block main %}
+  <h1>Properties</h1>
+  <div class="singleprops">
+    <div class="property">
+        <img class="library" src="{{ url_for('uploaded_file', filename = property.photo) }}" alt="{ image }">
+        <h2>{{ property.title }}</h2>
+        <p>Location: {{ property.location }}</p>
+        <p>Number of rooms: {{ property.roomnum }}</p>
+        <p>Number of bathrooms: {{ property.bathnum }}</p>
+        <p>Type of property: {{ property.propertytype }}</p>
+        <p>Price: {{ property.price }}</p>
+    </div>
+  </div>
+{% endblock %}

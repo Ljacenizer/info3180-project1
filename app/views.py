@@ -6,7 +6,7 @@ This file contains the routes for your application.
 """
 import os
 from app import app, db
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, send_from_directory
 from werkzeug.utils import secure_filename
 from app.database import Properties
 from app.forms import PropertyForms
@@ -55,10 +55,24 @@ def newproperties():
 
     return render_template('property.html', form=form)
 
+@app.route('/properties/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['PROPERTIES'], filename)
+
 @app.route('/properties')
 def property():
-    """Render website's home page."""
-    return render_template('home.html')
+    """Render website's property details."""
+    properties = Properties.query.all()
+
+    return render_template('properties.html', properties=properties)
+
+@app.route('/properties/<propertyid>')
+def propsingle(propertyid):
+    """Render a single property's details."""
+    property = Properties.query.get(propertyid)
+    if property is None:
+        flash('ID Invalid, try again')
+    return render_template('proptemplate.html', property=property)
 
 
 ###

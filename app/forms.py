@@ -7,8 +7,8 @@ from flask_wtf.file import FileField, FileRequired, FileAllowed
 class PropertyForms(FlaskForm):
     title = StringField('Property Title', validators=[InputRequired()])
     description = TextAreaField('Description', validators=[InputRequired()])
-    roomnum = StringField('Room Number', validators=[InputRequired()])
-    bathnum = StringField('Bathroom Number', validators=[InputRequired()])
+    roomnum = StringField('No. of Rooms', validators=[InputRequired()])
+    bathnum = StringField('No. of Bathrooms', validators=[InputRequired()])
     property = SelectField('Property Type', choices=[('house', 'House'), ('apartment', 'Apartment')])
     location = StringField('Location', validators=[InputRequired()])
     price = StringField('Price', validators=[InputRequired()])
